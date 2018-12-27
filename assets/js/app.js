@@ -1,5 +1,5 @@
 // Variables
-const ListList = document.getElementById('List-list');
+const groceryList = document.getElementById('grocery-list');
 
 
 // Event Listeners
@@ -7,10 +7,10 @@ eventListeners();
 
 function eventListeners() {
      // Form Submission
-     document.querySelector('#form').addEventListener('submit', newList);
+     document.querySelector('#form').addEventListener('submit', newgrocery);
 
-     // Remove List from the list
-     ListList.addEventListener('click', removeList);
+     // Remove grocery from the list
+     groceryList.addEventListener('click', removegrocery);
 
      // Document
      document.addEventListener('DOMContentLoaded', localStorageOnLoad);
@@ -19,109 +19,109 @@ function eventListeners() {
 
 // Functions
 
-function newList(e) {
+function newgrocery(e) {
      e.preventDefault();
 
      // Read the textarea value
-     const List = document.getElementById('List').value;
+     const grocery = document.getElementById('grocery').value;
 
      // Create the remove button
      const removeBtn = document.createElement('a');
-     removeBtn.classList = 'remove-List';
+     removeBtn.classList = 'remove-grocery';
      removeBtn.textContent = 'X';
 
      // Create an <li> element
      const li = document.createElement('li');
-     li.textContent = List; 
+     li.textContent = grocery; 
      
-     // Add the remove button to each List
+     // Add the remove button to each grocery
      li.appendChild(removeBtn);
 
      // Add to the list
-     ListList.appendChild(li);
+     groceryList.appendChild(li);
 
      // add to Local Storage
-     addListLocalStorage(List);
+     addgroceryLocalStorage(grocery);
 
      // Print the alert
-     alert('List Added');
+     alert('grocery Added');
 
      this.reset();
 } 
 
-// Removes the Lists from the DOM
-function removeList(e) {
-     if(e.target.classList.contains('remove-List')) {
+// Removes the grocerys from the DOM
+function removegrocery(e) {
+     if(e.target.classList.contains('remove-grocery')) {
           e.target.parentElement.remove();
      } 
 
      // Remove from Storage
-      removeListLocalStorage( e.target.parentElement.textContent ) ;
+      removegroceryLocalStorage( e.target.parentElement.textContent ) ;
 }
 
-// Adds the Lists into the local storage
-function addListLocalStorage(List) {
-     let Lists = getListsFromStorage();
+// Adds the grocerys into the local storage
+function addgroceryLocalStorage(grocery) {
+     let grocerys = getgrocerysFromStorage();
 
-     // Add the List into the array
-     Lists.push(List);
+     // Add the grocery into the array
+     grocerys.push(grocery);
 
-     // Convert List array into String
-     localStorage.setItem('Lists', JSON.stringify( Lists )  );
+     // Convert grocery array into String
+     localStorage.setItem('grocerys', JSON.stringify( grocerys )  );
 }
 
-function getListsFromStorage() {
-     let Lists;
-     const ListsLS = localStorage.getItem('Lists');
+function getgrocerysFromStorage() {
+     let grocerys;
+     const grocerysLS = localStorage.getItem('grocerys');
      // Get the values, if null is returned then we create an empty array
-     if(ListsLS === null) {
-          Lists = [];
+     if(grocerysLS === null) {
+          grocerys = [];
      } else {
-          Lists = JSON.parse( ListsLS ); 
+          grocerys = JSON.parse( grocerysLS ); 
      }
-     return Lists;
+     return grocerys;
 }
 
-// Prints Local Storage Lists on Load
+// Prints Local Storage grocerys on Load
 function localStorageOnLoad() {
-     let Lists = getListsFromStorage();
+     let grocerys = getgrocerysFromStorage();
 
      // Loop throught storage and then print the values
-     Lists.forEach(function(List) {
+     grocerys.forEach(function(grocery) {
           // Create the remove button
           const removeBtn = document.createElement('a');
-          removeBtn.classList = 'remove-List';
+          removeBtn.classList = 'remove-grocery';
           removeBtn.textContent = 'X';
 
           // Create an <li> element
           const li = document.createElement('li');
-          li.textContent = List; 
+          li.textContent = grocery; 
           
-          // Add the remove button to each List
+          // Add the remove button to each grocery
           li.appendChild(removeBtn);
 
           // Add to the list
-          ListList.appendChild(li);
+          groceryList.appendChild(li);
      });
 }
 
-// Removes the List from local storage
+// Removes the grocery from local storage
 
-function removeListLocalStorage(List) {
-     // get Lists from storage
-     let Lists = getListsFromStorage();
+function removegroceryLocalStorage(grocery) {
+     // get grocerys from storage
+     let grocerys = getgrocerysFromStorage();
 
-     // Remove the X from the List
+     // Remove the X from the grocery
 
-     const ListDelete = List.substring( 0, List.length -1 );
+     const groceryDelete = grocery.substring( 0, grocery.length -1 );
 
-     // Loop Throught  the Lists and remove the List that's equal
-     Lists.forEach(function(ListLS, index) {
-          if(ListDelete === ListLS) {
-               Lists.splice(index, 1);
+     // Loop Throught  the grocerys and remove the grocery that's equal
+     grocerys.forEach(function(groceryLS, index) {
+          if(groceryDelete === groceryLS) {
+               grocerys.splice(index, 1);
           }
      });
 
      // Save the data 
-     localStorage.setItem('Lists', JSON.stringify(Lists) );
+     localStorage.setItem('grocerys', JSON.stringify(grocerys) );
 }
