@@ -8,6 +8,9 @@ function eventListeners(){
 
 //Form submission
 document.querySelector('#form').addEventListener('submit',newList);
+
+//remove from the list
+listList.addEventListener('click',removeList)
 }
 
 //Function
@@ -31,6 +34,13 @@ function newList(e){
 
     //Add to the list
     listList.appendChild(li);
+
+    //remove the list from the DoM
+    function removeList(e){
+        if(e.target.classList.contains('remove-List')){
+            e.target.parentElement.remove();
+        } 
+    }
 
 
 
